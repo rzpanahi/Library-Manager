@@ -10,11 +10,11 @@
         <form action="{% url 'login' %}" method="POST">
             {% csrf_token %}
             <div class="form-group">
-                <input type="text" class="form-control" id="username"  placeholder="نام کاربری">
+                <input type="text" class="form-control" name="username"  placeholder="نام کاربری">
             </div>
             <br>
             <div class="form-group">
-                <input type="password" class="form-control" id="password" placeholder="رمز عبور">
+                <input type="password" class="form-control" name="password" placeholder="رمز عبور">
             </div>
             <br>
             <button type="submit" class="btn btn-success btn-lg">ورود</button>
