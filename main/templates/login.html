@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container">
+    <div class="col-md-6 offset-md-3">
+        <br>
+        <h1>صفحه ورود</h1>
+        <br><br>
+        <form action="{% url 'login' %}" method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <input type="text" class="form-control" id="username"  placeholder="نام کاربری">
+            </div>
+            <br>
+            <div class="form-group">
+                <input type="password" class="form-control" id="password" placeholder="رمز عبور">
+            </div>
+            <br>
+            <button type="submit" class="btn btn-success btn-lg">ورود</button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
