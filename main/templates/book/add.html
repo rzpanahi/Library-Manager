@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+<div class="container">
+    <br>
+    <div class="col-md-6 offset-md-3">
+        <h1>اضافه کردن کتاب</h1>
+        <br><br><br>
+        <form action="{% url 'addbook' %}" method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-success mt-2">اضافه کردن کتاب</button>
+            <!-- <div class="form-group"> -->
+            <!--     <input type="text" class="form-control" name="name" placeholder="نام کتاب"> -->
+            <!-- </div> -->
+            <!-- <br> -->
+            <!-- <div class="form-group"> -->
+            <!--     <input type="text" class="form-control" name="author" placeholder="نام نویسنده"> -->
+            <!-- </div> -->
+            <!-- <br> -->
+            <!-- <button type="submit" class="btn btn-success btn-lg">اضافه کردن</button> -->
+        </form>
+    </div>
+</div>
+
+    {% endblock content %}

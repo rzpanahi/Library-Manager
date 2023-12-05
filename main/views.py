@@ -2,6 +2,9 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
 
+from main.forms import BookForm
+from .models import Book
+
 
 def home(request):
     return render(request, "home.html", {})
@@ -38,3 +41,35 @@ def logout_user(request):
     logout(request)
     messages.success(request, "با موفقیت خارج شدید")
     return redirect("home")
+
+
+def books(request):
+    if not request.user.is_authenticated:
+        messages.success(request, "برای دسترسی باید وارد حساب کاربری خود شوید")
+        return redirect("home")
+
+    books = Book.objects.all()
+
+    return render(request, "books.html", {"books": books})
+
+
+def add_book(request):
+    if not request.user.is_authenticated:
+        messages.success(request, "برای دسترسی باید وارد حساب کاربری خود شوید")
+        return redirect("home")
+
+    if request.method == "GET":
+        form = BookForm()
+        return render(request, "book/add.html", {"form": form})
+
+    if request.method == "POST":
+        form = BookForm(request.POST)
+        if form.is_valid():
+            book_name = form.cleaned_data["name"]
+            book_author = form.cleaned_data["author"]
+
+            Book.objects.create(name=book_name, author=book_author)
+
+            messages.success(request, "کتاب با موفقیت ساخته شد")
+            return redirect("books")
+        return render(request, "book/add.html", {"form": form})
