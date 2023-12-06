@@ -73,3 +73,17 @@ def add_book(request):
             messages.success(request, "کتاب با موفقیت ساخته شد")
             return redirect("books")
         return render(request, "book/add.html", {"form": form})
+
+
+def book(request, pk):
+    if not request.user.is_authenticated:
+        messages.success(request, "برای دسترسی باید وارد حساب کاربری خود شوید")
+        return redirect("login")
+
+    book = Book.objects.get(id=pk)
+
+    if not book:
+        messages.success(request, "کتابی با این شماره موجود نیست")
+        return redirect(request, "books.html", {})
+
+    return render(request, "book/book.html", {"book": book})
