@@ -114,3 +114,17 @@ def update(request, pk):
 
         messages.success(request, "کتاب بروزرسانی شد")
         return redirect("books")
+
+
+def remove(request, pk):
+    if not request.user.is_authenticated:
+        messages.success(request, "برای دسترسی باید وارد حساب کاربری خود شوید")
+        return redirect("login")
+
+    # if request.method != "POST":
+    #     messages.success(request, "مشکل در برقراری ارتباط با سرور")
+    #     return redirect("books")
+
+    book = Book.objects.get(id=pk).delete()
+    messages.success(request, "کتاب با موفقیت حذف شد")
+    return redirect("books")
