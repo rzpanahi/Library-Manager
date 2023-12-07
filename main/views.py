@@ -84,6 +84,33 @@ def book(request, pk):
 
     if not book:
         messages.success(request, "کتابی با این شماره موجود نیست")
-        return redirect(request, "books.html", {})
+        return render(request, "books.html", {})
 
     return render(request, "book/book.html", {"book": book})
+
+
+def update(request, pk):
+    if not request.user.is_authenticated:
+        messages.success(request, "برای دسترسی باید وارد حساب کاربری خود شوید")
+        return redirect("login")
+
+    book = Book.objects.get(id=pk)
+
+    if request.method == "GET":
+        form = BookForm(instance=book)
+        return render(request, "book/update.html", {"form": form})
+
+    if request.method == "POST":
+        form = BookForm(request.POST)
+
+        if not form.is_valid():
+            messages.success(request, "مقادیر ورودی را تغییر دهید")
+            return render(request, "book/update.html", {"form": form})
+
+        book.name = form.cleaned_data["name"]
+        book.author = form.cleaned_data["author"]
+
+        book.save()
+
+        messages.success(request, "کتاب بروزرسانی شد")
+        return redirect("books")
