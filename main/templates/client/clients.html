@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+<div class="container">
+    <br>
+    <h1>مشتری ها</h1>
+    <br><br>
+
+    <a type="" class="btn btn-primary btn-lg" href="{% url 'addclient' %}">اضافه کردن مشتری</a>
+    <br><br>
+
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col"></th>
+                <th scope="col">#</th>
+                <th scope="col">نام</th>
+                <th scope="col">ایمیل</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if clients %}
+            {% for client in clients %}
+            <tr>
+                <td><a class="btn btn-sm btn-info" href="">جزییات</a></td>
+                <th scope="row">{{ book.id }}</th>
+                <td>{{ client.name }}</td>
+                <td>{{ client.email }}</td>
+                <td>{{ client.email }}</td>
+            </tr>
+            {% endfor %}
+            {% endif %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock content %}

@@ -2,8 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
 
-from main.forms import BookForm
-from .models import Book
+from main.forms import BookForm, ClientForm
+from .models import Book, Client
 
 
 def home(request):
@@ -128,3 +128,36 @@ def remove(request, pk):
     book = Book.objects.get(id=pk).delete()
     messages.success(request, "کتاب با موفقیت حذف شد")
     return redirect("books")
+
+
+def clients(request):
+    if not request.user.is_authenticated:
+        messages.success(request, "برای دسترسی باید وارد حساب کاربری خود شوید")
+        return redirect("home")
+
+    clients = Client.objects.all()
+
+    return render(request, "client/clients.html", {"clients": clients})
+
+
+def addclient(request):
+    if not request.user.is_authenticated:
+        messages.success(request, "برای دسترسی باید وارد حساب کاربری خود شوید")
+        return redirect("home")
+
+    if request.method == "GET":
+        form = ClientForm()
+        return render(request, "client/add.html", {"form": form})
+
+    if request.method == "POST":
+        form = ClientForm(request.POST)
+
+        if form.is_valid():
+            client_name = form.cleaned_data["name"]
+            client_email = form.cleaned_data["email"]
+
+            Client.objects.create(name=client_name, email=client_email)
+
+            messages.success(request, "مشتری با موفقیت اضافه شد")
+            return redirect("clients")
+        return render(request, "client/add.html", {"form": form})

@@ -6,7 +6,7 @@ class Client(models.Model):
     name = models.CharField(max_length=255)
     email = models.EmailField(unique=True)
     bookLandedNumber = models.IntegerField(
-        validators=[MaxValueValidator(2), MinValueValidator(0)]
+        validators=[MaxValueValidator(2), MinValueValidator(0)], default=0
     )
 
     def __str__(self):

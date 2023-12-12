@@ -1,5 +1,5 @@
 from django import forms
-from .models import Book
+from .models import Book, Client
 
 
 class BookForm(forms.ModelForm):
@@ -9,3 +9,12 @@ class BookForm(forms.ModelForm):
     class Meta:
         model = Book
         fields = ["name", "author"]
+
+
+class ClientForm(forms.ModelForm):
+    name = forms.CharField(label="نام کامل", max_length=255, min_length=3)
+    email = forms.EmailField(label="ایمیل")
+
+    class Meta:
+        model = Client
+        fields = ["name", "email"]
