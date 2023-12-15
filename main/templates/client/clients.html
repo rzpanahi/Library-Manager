@@ -14,10 +14,11 @@
     <table class="table">
         <thead class="thead-dark">
             <tr>
-                <th scope="col"></th>
                 <th scope="col">#</th>
+                <th scope="col">شماره</th>
                 <th scope="col">نام</th>
                 <th scope="col">ایمیل</th>
+                <th scope="col">تعداد کتاب</th>
             </tr>
         </thead>
         <tbody>
@@ -28,7 +29,7 @@
                 <th scope="row">{{ book.id }}</th>
                 <td>{{ client.name }}</td>
                 <td>{{ client.email }}</td>
-                <td>{{ client.email }}</td>
+                <td>{{ client.bookLandedNumber }}</td>
             </tr>
             {% endfor %}
             {% endif %}
